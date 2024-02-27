@@ -9,7 +9,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 # Preamble
-This tutorial is intended as an addendum to the base q2-decontam-tutorial that can be found [here]()\
+This tutorial is intended as an addendum to the base q2-decontam-tutorial that can be found [here](https://github.com/jordenrabasco/q2-decontam-tutorial/blob/main/Q2_Decontam_Tutorial.html)\
 The `decontam-identify-batches` functionality is intended for identification of batch associated contamination. This form of contamination identification will allow for tracking of individual contaminants through the sequencing process and will assist in identification of the sources of contamination. 
 
 # Structure
@@ -53,4 +53,4 @@ To run `decontam-identify-batches` with the example data use the following comma
 qiime quality-control decontam-identify-batches --i-table table.qza --i-rep-seqs rep_seqs.qza --m-metadata-file metadata.tsv --p-split-column subject --p-filter-empty-features  --p-method combined --p-prev-control-column Sample_or_Control --p-prev-control-indicator control --p-freq-concentration-column Concentration --p-threshold 0.1 --p-no-weighted --p-bin-size 0.05 --output-dir batches_outputs 
 ```
 
-This will produce an output folder will all of the designated outputs which can be seen [here]()
+This will produce an output folder will all of the designated outputs which can be seen [here](https://github.com/jordenrabasco/q2-decontam-tutorial/tree/main/data_objs/batches_outputs)
