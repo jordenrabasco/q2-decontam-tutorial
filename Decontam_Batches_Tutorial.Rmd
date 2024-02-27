@@ -1,0 +1,56 @@
+---
+title: "Decontam_Batches_Tutorial"
+output: html_document
+date: "2024-02-27"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Preamble
+This tutorial is intended as an addendum to the base q2-decontam-tutorial that can be found [here]()\
+The `decontam-identify-batches` functionality is intended for identification of batch associated contamination. This form of contamination identification will allow for tracking of individual contaminants through the sequencing process and will assist in identification of the sources of contamination. 
+
+# Structure
+The pipeline action `decontam-identify-batches` initially splits a feature table multiple differing sub-tables based on the categories in a metadata column provided by the user. For example, to compare contamination across sequencing batches it maybe useful to split the table based on sequencing batch. Then on each of the sub-tables decontam processes are run and a comprehensive visual is produced. This action will take the place of `decontam-identify` and `decontam-score-viz` in the base q2-dceontam-tutorial. 
+
+# Tutorial and Walkthrough
+
+### Setup
+
+This tutorial will include example commands with data that can be found below:
+
+Feature Data Table | [`table.qza`](https://github.com/jordenrabasco/q2-decontam-tutorial/raw/main/data_objs/table.qza "download")\
+Representative Sequence Table | [`rep_seqs.qza`](https://github.com/jordenrabasco/q2-decontam-tutorial/raw/main/data_objs/rep_seqs.qza "download")\
+
+To get the associated metadata file for the example data you will need to run the below command:
+```{r, engine = 'bash', eval = FALSE}
+wget https://github.com/jordenrabasco/q2-decontam-tutorial/blob/main/data_objs/metadata.tsv
+```
+
+
+### dectonam-identify-batches
+The `decontam-identify-batches` function has the inputs and parameters for all both the `decontam-identify` action and the `decontam-score-viz` functions as well as the options for `feature-tables split`. Those inputs and parameters are;\
+`--i-table`: takes in a FeatureTable[Frequency] artifact such as an ASV or OTU table\
+`--m-metadata-file`: is your metadata file (needs to be tab delimited)\
+`--i-rep-seqs`: this takes in a FeatureData[Sequence] artifact, which is the artifact generated from uploading a .fasta file into a qiime environment.\
+`--p-split-column`: this indicates the metadata column which will subset the input table\
+`--p-filter-empty-features` / `--p-no-filter-empty-features`: These are two options which explicitly indicate whether the split tables will have their empty features filtered out. `--p-filter-empty-features` will filter out empty features in the subsetted tables and `--p-no-filter-empty-features` will not remove empty features from the subset tables.\
+`--p-method`: denotes the method that will be used (in this case "Frequency")\
+`--p-freq-concentration-column`: denotes the metadata column that holds the concentration information of each sample within the metadata file\
+`--p-prev-control-column`: denotes the column in the metadata file contains the information on whether a sample is an experimental or a control sample\
+`--p-prev-control-indicator`: text within the `--p-prev-control-column` that identifies a control sample\
+`--p-threshold`: this is the threshold at which features are designated as not contaminants. Below this threshold the features are considered contaminants.\
+`--p-weighted` / `--p-no-weighted`: These are the two options which explicitly indicate whether to weigh the histogram in the `.qzv` file by the read abundance. `--p-wegihted` indicates that the histogram will be weighted while `--p-no-weighted` will produce a histogram of the features instead of reads at each decontam score bin.\
+`--p-bin-size`: This indicates what the bin size of the histogram in the `.qzv` output should be. It is recommend that the bin size be 0.05.\
+`--o-batch-subset-tables`: This indicates the folder where the subset tables will be sent too. The tables will be renamed with both the subset column name and their subset variable to allow for differentiation.\
+`--o-decontam-scores`: This indicates the folder where decontam score tables for the subset tables will be sent too. The decontam score tables will be renamed with both the subset column name and their subset variable to allow for differentiation.\
+`--o-score-histograms`: The output `.qzv` file from the the action that can be visualized on the qiime serves which can be found [here](https://view.qiime2.org/)\
+
+To run `decontam-identify-batches` with the example data use the following command:
+```{r, engine = 'bash', eval = FALSE}
+qiime quality-control decontam-identify-batches --i-table table.qza --i-rep-seqs rep_seqs.qza --m-metadata-file metadata.tsv --p-split-column subject --p-filter-empty-features  --p-method combined --p-prev-control-column Sample_or_Control --p-prev-control-indicator control --p-freq-concentration-column Concentration --p-threshold 0.1 --p-no-weighted --p-bin-size 0.05 --output-dir batches_outputs 
+```
+
+This will produce an output folder will all of the designated outputs which can be seen [here]()

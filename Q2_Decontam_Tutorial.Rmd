@@ -90,7 +90,7 @@ The Decontam score visualization action takes in a number of arguments;\
 `--p-threshold`: this is the threshold at which features are designated as not contaminants. Below this threshold the features are considered contaminants.\
 `--p-weighted` / `--p-no-weighted`: These are the two options which explicitly indicate whether to weigh the histogram in the `.qzv` file by the read abundance. `--p-wegihted` indicates that the histogram will be weighted while `--p-no-weighted` will produce a histogram of the features instead of reads at each decontam score bin.\
 `--p-bin-size`: This indicates what the bin size of the histogram in the `.qzv` output should be. It is recommend that the bin size be 0.05.\
-`--o-visualization`: Is the output `.qzv` file from the the action that can be visualized on the qiime serves which can be found [here](https://view.qiime2.org/)\
+`--o-visualization`: The output `.qzv` file from the the action that can be visualized on the qiime serves which can be found [here](https://view.qiime2.org/)\
 
 To run `decontam-score-viz` with the example data use the following command:
 ```{r, engine = 'bash', eval = FALSE}
