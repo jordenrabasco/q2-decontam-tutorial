@@ -18,14 +18,15 @@ The q2-Decontam functionality is included in the base qiime2 distribution under 
 
 ### Setup
 
-This tutorial will include example commands with data that can be downloaded via the following commands:
+This tutorial will include example commands with data that can be found below:
 
+Feature Data Table | [`table.qza`](https://github.com/jordenrabasco/q2-decontam-tutorial/raw/main/data_objs/table.qza "download")\
+Representative Sequence Table | [`rep_seqs.qza`](https://github.com/jordenrabasco/q2-decontam-tutorial/raw/main/data_objs/rep_seqs.qza "download")\
+
+To get the associated metadata file for the example data you will need to run the below command:
 ```{r, engine = 'bash', eval = FALSE}
-wget
-wget
-wget
+wget https://github.com/jordenrabasco/q2-decontam-tutorial/blob/main/data_objs/metadata.tsv
 ```
-This example data is sourced from https://github.com/benjjneb/DecontamManuscript. A Decontam manuscript investigating contamination in oral microbiome measurements. 
 
 ### dectonam-identify
 The first action that will be run is `dectonam-identify`. This action runs the functionality in the base r Decontam application. As such yo will need to decide which method of Decontam you would like to run either the Frequency, Prevalence, or Combined method. An in depth explanation of the functionality each methods algorithm can be found here: https://benjjneb.github.io/decontam/vignettes/decontam_intro.html
@@ -44,7 +45,7 @@ To run `decontam-identify` with the frequency method and the example data use th
 ```{r, engine = 'bash', eval = FALSE}
 qiime quality-control decontam-identify --i-table table.qza --m-metadata-file metadata.tsv --p-method frequency --p-freq-concentration-column Concentration --o-decontam-scores freq_decontam_scores.qza
 ```
-The output of the frequency method can be found [here]()
+The output of the frequency method can be found [here](https://github.com/jordenrabasco/q2-decontam-tutorial/raw/main/data_objs/freq_decontam_scores.qza "download")
 
 Now an example of how to run the prevalence method;\
 `--i-table`: takes in a FeatureTable[Frequency] artifact such as an ASV or OTU table\
@@ -58,7 +59,7 @@ To run `decontam-identify` with the prevalence method and the example data use t
 ```{r, engine = 'bash', eval = FALSE}
 qiime quality-control decontam-identify --i-table table.qza --m-metadata-file metadata.tsv --p-method prevalence --p-prev-control-column Sample_or_Control --p-prev-control-indicator control  --o-decontam-scores prev_decontam_scores.qza
 ```
-The output of the prevalence method can be found [here]()
+The output of the prevalence method can be found [here](https://github.com/jordenrabasco/q2-decontam-tutorial/raw/main/data_objs/prev_decontam_scores.qza "download")
 
 And now the combined method;\
 `--i-table`: takes in a FeatureTable[Frequency] artifact such as an ASV or OTU table\
@@ -73,7 +74,7 @@ To run `decontam-identify` with the combined method and the example data use the
 ```{r, engine = 'bash', eval = FALSE}
 qiime quality-control decontam-identify --i-table table.qza --m-metadata-file metadata.tsv --p-method combined --p-prev-control-column Sample_or_Control --p-prev-control-indicator control --p-freq-concentration-column Concentration --o-decontam-scores comb_decontam_scores.qza
 ```
-The output of the combined method can be found [here]()
+The output of the combined method can be found [here](https://github.com/jordenrabasco/q2-decontam-tutorial/raw/main/data_objs/comb_decontam_scores.qza "download")
 
 For clarity you only need to utilize one of these methodologies to identify contaminants in your samples. 
 
@@ -96,16 +97,26 @@ To run `decontam-score-viz` with the example data use the following command:
 qiime quality-control decontam-score-viz --i-decontam-scores comb_decontam_scores.qza --i-table table.qza --i-rep-seqs rep_seqs.qza --p-threshold 0.1 --p-no-weighted --p-bin-size 0.05 --o-visualization decontan_score_viz.qzv
 ```
 
-This will output a `.qzv` file which can be visualized on the [qiime servers](https://view.qiime2.org/)
+This will output a `.qzv` file can be found [here](https://github.com/jordenrabasco/q2-decontam-tutorial/raw/main/data_objs/decontan_score_viz.qzv "download") and can be visualized on the [qiime servers](https://view.qiime2.org/)
 
 
 ### dectonam-remove
 `decontam-remove` is designed to be run after the `decontam-score-viz` action. This action removes contamination sequences identified via the Dectonam algorithm run in the `decontam-identify` step and visualized in the `decontam-score-viz` step. This action takes in both the feature table and the representative sequences table generated from previous steps, as well as a threshold to determine which sequences to keep and which ones to remove. This function alllows for further downstream processing in the Qiime2 environment in particularly phylogenetic tree generation. 
-To run 1decontam-remove` with the example data use the following command:
 
+The `decontam-remove` takes in a number of arguments;\
+`--i-decontam-scores`: this is the output obj from `decontam-identify` and is defined as a Collection[FeatureData[DecontamScore]] (same as input to `decontam-score-viz`)\
+`--i-table`: takes in a FeatureTable[Frequency] artifact such as an ASV or OTU table (same as input to `decontam-identify` and `decontam-score-viz`)\
+`--i-rep-seqs`: this takes in a FeatureData[Sequence] artifact, which is the artifact generated from uploading a .fasta file into a qiime environment.(same as input to `decontam-score-viz`)\
+`--p-threshold`: this is the threshold at which features are designated as not contaminants. Below this threshold the features are considered contaminants.\
+`--o-filtered-table`: This is the same as the table input in the `--i-table` argument but with the contaminant sequences removed\
+`--o-filtered-rep-seqs`: This is the same as the table input in the `--i-rep-seqs` argument but with the contaminant sequences removed\
+
+To run `decontam-remove` with the example data use the following command:
 ```{r, engine = 'bash', eval = FALSE}
-temp
+qiime quality-control decontam-remove --i-decontam-scores comb_decontam_scores.qza --i-table table.qza --i-rep-seqs rep_seqs.qza --p-threshold 0.1 --o-filtered-table filtered-table.qza --o-filtered-rep-seqs filtered-rep-seqs.qza
 ```
+This will output two files the filtered feature table and the representative sequence table free of contaminants, and can be found [here](https://github.com/jordenrabasco/q2-decontam-tutorial/raw/main/data_objs/filtered-table.qza "donwload") and [here](https://github.com/jordenrabasco/q2-decontam-tutorial/raw/main/data_objs/filtered-rep-seqs.qza "download") respectively.
 
+Please feel free to reach out to me at jrabasc@ncsu.edu it you have ny further questions! 
 
 
