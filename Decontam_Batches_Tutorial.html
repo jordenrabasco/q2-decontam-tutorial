@@ -457,7 +457,7 @@ pre code {
 <div id="preamble" class="section level1">
 <h1>Preamble</h1>
 <p>This tutorial is intended as an addendum to the base
-q2-decontam-tutorial that can be found <a href="https://github.com/jordenrabasco/q2-decontam-tutorial/blob/main/Q2_Decontam_Tutorial.html">here</a><br>
+qiime-decontam-tutorial that can be found <a href="https://github.com/jordenrabasco/q2-decontam-tutorial/blob/main/Q2_Decontam_Tutorial.html">here</a><br>
 The <code>decontam-identify-batches</code> functionality is intended for
 identification of batch associated contamination. This form of
 contamination identification will allow for tracking of individual
@@ -467,13 +467,14 @@ identification of the sources of contamination.</p>
 <div id="structure" class="section level1">
 <h1>Structure</h1>
 <p>The pipeline action <code>decontam-identify-batches</code> initially
-splits a feature table multiple differing sub-tables based on the
-categories in a metadata column provided by the user. For example, to
-compare contamination across sequencing batches it maybe useful to split
-the table based on sequencing batch. Then on each of the sub-tables
-decontam processes are run and a comprehensive visual is produced. This
-action will take the place of <code>decontam-identify</code> and
-<code>decontam-score-viz</code> in the base q2-dceontam-tutorial.</p>
+splits a feature table into multiple differing subset tables based on
+the categories in a metadata column provided by the user. For example,
+to compare contamination across sequencing batches it maybe useful to
+split the table based on sequencing batch. Then on each of the subset
+tables decontam processes are run and a comprehensive visual is
+produced. This action will take the place of
+<code>decontam-identify</code> and <code>decontam-score-viz</code> in
+the base qiime-dceontam-tutorial.</p>
 </div>
 <div id="tutorial-and-walkthrough" class="section level1">
 <h1>Tutorial and Walkthrough</h1>
@@ -491,9 +492,9 @@ need to run the below command:</p>
 <div id="dectonam-identify-batches" class="section level3">
 <h3>dectonam-identify-batches</h3>
 <p>The <code>decontam-identify-batches</code> function has the inputs
-and parameters for all both the <code>decontam-identify</code> action
-and the <code>decontam-score-viz</code> functions as well as the options
-for <code>feature-tables split</code>. Those inputs and parameters
+and parameters for both the <code>decontam-identify</code> action and
+the <code>decontam-score-viz</code> functions as well as the options for
+<code>feature-tables split</code>. Those inputs and parameters
 are;<br>
 <code>--i-table</code>: takes in a FeatureTable[Frequency] artifact such
 as an ASV or OTU table<br>
