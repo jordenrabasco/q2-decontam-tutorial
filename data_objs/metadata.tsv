@@ -1,0 +1,36 @@
+sample-id	barcode-sequence	body-site	year	month	day	subject	reported-antibiotic-usage	days-since-experiment-start	Concentration	Sample_or_Control
+#q2:types	categorical	categorical	numeric	numeric	numeric	categorical	categorical	numeric	numeric	categorical
+L1S8	AGCTGACTAGTC	gut	2008	10	28	subject-1	Yes	0	2829	experimental
+L1S57	ACACACTATGGC	gut	2009	1	20	subject-1	No	84	5808	experimental
+L1S76	ACTACGTGTGGT	gut	2009	2	17	subject-1	No	112	5052	experimental
+L1S105	AGTGCGATGCGT	gut	2009	3	17	subject-1	No	140	1227	experimental
+L2S155	ACGATGCGACCA	left palm	2009	1	20	subject-1	No	84	3872	experimental
+L2S175	AGCTATCCACGA	left palm	2009	2	17	subject-1	No	112	5872	experimental
+L2S204	ATGCAGCTCAGT	left palm	2009	3	17	subject-1	No	140	5014	experimental
+L2S222	CACGTGACATGT	left palm	2009	4	14	subject-1	No	168	1127	experimental
+L3S242	ACAGTTGCGCGA	right palm	2008	10	28	subject-1	Yes	0	5039	experimental
+L3S294	CACGACAGGCTA	right palm	2009	1	20	subject-1	No	84	5402	experimental
+L3S313	AGTGTCACGGTG	right palm	2009	2	17	subject-1	No	112	5740	experimental
+L3S341	CAAGTGAGAGAG	right palm	2009	3	17	subject-1	No	140	6015	experimental
+L3S360	CATCGTATCAAC	right palm	2009	4	14	subject-1	No	168	5871	experimental
+L5S104	CAGTGTCAGGAC	gut	2008	10	28	subject-1	Yes	0	53	control
+L5S155	ATCTTAGACTGC	left palm	2009	1	20	subject-1	No	84	25	control
+L5S174	CAGACATTGCGT	right palm	2009	2	17	subject-1	No	112	65	control
+L5S203	CGATGCACCAGA	gut	2009	3	17	subject-1	No	140	98	control
+L5S222	CTAGAGACTCTT	left palm	2009	4	14	subject-1	No	168	35	control
+L1S140	ATGGCAGCTCTA	gut	2008	10	28	subject-2	Yes	0	254	experimental
+L1S208	CTGAGATACGCG	gut	2009	1	20	subject-2	No	84	2382	experimental
+L1S257	CCGACTGAGATG	gut	2009	3	17	subject-2	No	140	5813	experimental
+L1S281	CCTCTCGTGATC	gut	2009	4	14	subject-2	No	168	6172	experimental
+L2S240	CATATCGCAGTT	left palm	2008	10	28	subject-2	Yes	0	6296	experimental
+L2S309	CGTGCATTATCA	left palm	2009	1	20	subject-2	No	84	6164	experimental
+L2S357	CTAACGCAGTCA	left palm	2009	3	17	subject-2	No	140	4846	experimental
+L2S382	CTCAATGACTCA	left palm	2009	4	14	subject-2	No	168	1615	experimental
+L3S378	ATCGATCTGTGG	right palm	2008	10	28	subject-2	Yes	0	6291	experimental
+L4S63	CTCGTGGAGTAG	right palm	2009	1	20	subject-2	No	84	6719	experimental
+L4S112	GCGTTACACACA	right palm	2009	3	17	subject-2	No	140	6692	experimental
+L4S137	GAACTGTATCTC	right palm	2009	4	14	subject-2	No	168	6245	experimental
+L5S240	CTGGACTCATAG	gut	2008	10	28	subject-2	Yes	0	24	control
+L6S20	GAGGCTCATCAT	left palm	2009	1	20	subject-2	No	84	75	control
+L6S68	GATACGTCCTGA	right palm	2009	3	17	subject-2	No	140	687	control
+L6S93	GATTAGCACTCT	right palm	2009	4	14	subject-2	No	168	14	control
