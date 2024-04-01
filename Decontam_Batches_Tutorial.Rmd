@@ -9,11 +9,11 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 # Preamble
-This tutorial is intended as an addendum to the base qiime-decontam-tutorial that can be found [here](https://github.com/jordenrabasco/q2-decontam-tutorial/blob/main/Q2_Decontam_Tutorial.html)\
+This tutorial is intended as an addendum to the base qiime-decontam-tutorial that can be found [here](https://jordenrabasco.github.io/Q2_Decontam_Tutorial.html)\
 The `decontam-identify-batches` functionality is intended for identification of batch associated contamination. This form of contamination identification will allow for tracking of individual contaminants through the sequencing process and will assist in identification of the sources of contamination. 
 
 # Structure
-The pipeline action `decontam-identify-batches` initially splits a feature table into multiple differing subset tables based on the categories in a metadata column provided by the user. For example, to compare contamination across sequencing batches it maybe useful to split the table based on sequencing batch. Then on each of the subset tables decontam processes are run and a comprehensive visual is produced. This action will take the place of `decontam-identify` and `decontam-score-viz` in the base qiime-dceontam-tutorial. 
+The pipeline action `decontam-identify-batches` initially splits a feature table into multiple subset tables based on the categories in a metadata column provided by the user. For example, to compare contamination across sequencing runs it maybe useful to split the table based which sequencing run each sample was generated from. Then on each of the subset tables, decontam processes are run and a comprehensive visual is produced. This action utilizes both `decontam-identify` and `decontam-score-viz` however it is not intended will to take the place of `decontam-identify` and `decontam-score-viz` actions. 
 
 # Tutorial and Walkthrough
 
@@ -42,7 +42,7 @@ The `decontam-identify-batches` function has the inputs and parameters for both 
 `--p-prev-control-column`: denotes the column in the metadata file contains the information on whether a sample is an experimental or a control sample\
 `--p-prev-control-indicator`: text within the `--p-prev-control-column` that identifies a control sample\
 `--p-threshold`: this is the threshold at which features are designated as not contaminants. Below this threshold the features are considered contaminants.\
-`--p-weighted` / `--p-no-weighted`: These are the two options which explicitly indicate whether to weigh the histogram in the `.qzv` file by the read abundance. `--p-wegihted` indicates that the histogram will be weighted while `--p-no-weighted` will produce a histogram of the features instead of reads at each decontam score bin.\
+`--p-weighted` / `--p-no-weighted`: These are the two options which explicitly indicate whether to weigh the histogram in the `.qzv` file by the read abundance. `--p-weighted` indicates that the histogram will be weighted while `--p-no-weighted` will produce a histogram of the features instead of reads at each decontam score bin.\
 `--p-bin-size`: This indicates what the bin size of the histogram in the `.qzv` output should be. It is recommend that the bin size be 0.05.\
 `--o-batch-subset-tables`: This indicates the folder where the subset tables will be sent too. The tables will be renamed with both the subset column name and their subset variable to allow for differentiation.\
 `--o-decontam-scores`: This indicates the folder where decontam score tables for the subset tables will be sent too. The decontam score tables will be renamed with both the subset column name and their subset variable to allow for differentiation.\
