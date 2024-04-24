@@ -9,11 +9,13 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 # Preamble
+
 This tutorial is intended as an addendum to the base qiime-decontam-tutorial that can be found [here](https://jordenrabasco.github.io/Q2_Decontam_Tutorial.html)\
-The `decontam-identify-batches` functionality is intended for identification of batch associated contamination. This form of contamination identification will allow for tracking of individual contaminants through the sequencing process and will assist in identification of the sources of contamination. 
+The `decontam-identify-batches` functionality is intended for identification of batch associated contamination. This form of contamination identification will allow for tracking of individual contaminants through the sequencing process and will assist in identification of the sources of contamination.
 
 # Structure
-The pipeline action `decontam-identify-batches` initially splits a feature table into multiple subset tables based on the categories in a metadata column provided by the user. For example, to compare contamination across sequencing runs it maybe useful to split the table based which sequencing run each sample was generated from. Then on each of the subset tables, decontam processes are run and a comprehensive visual is produced. This action utilizes both `decontam-identify` and `decontam-score-viz` however it is not intended will to take the place of `decontam-identify` and `decontam-score-viz` actions. 
+
+The pipeline action `decontam-identify-batches` initially splits a feature table into multiple subset tables based on the categories in a metadata column provided by the user. For example, to compare contamination across sequencing runs it maybe useful to split the table based which sequencing run each sample was generated from. Then on each of the subset tables, decontam processes are run and a comprehensive visual is produced. This action utilizes both `decontam-identify` and `decontam-score-viz` however it is not intended will to take the place of `decontam-identify` and `decontam-score-viz` actions.
 
 # Tutorial and Walkthrough
 
@@ -21,16 +23,17 @@ The pipeline action `decontam-identify-batches` initially splits a feature table
 
 This tutorial will include example commands with data that can be found below:
 
-Feature Data Table | [`table.qza`](https://github.com/jordenrabasco/q2-decontam-tutorial/raw/main/data_objs/table.qza "download")\
-Representative Sequence Table | [`rep_seqs.qza`](https://github.com/jordenrabasco/q2-decontam-tutorial/raw/main/data_objs/rep_seqs.qza "download")\
+Feature Data Table \| [`table.qza`](https://github.com/jordenrabasco/q2-decontam-tutorial/raw/main/data_objs/table.qza "download")\
+Representative Sequence Table \| [`rep_seqs.qza`](https://github.com/jordenrabasco/q2-decontam-tutorial/raw/main/data_objs/rep_seqs.qza "download")\
 
 To get the associated metadata file for the example data you will need to run the below command:
+
 ```{r, engine = 'bash', eval = FALSE}
 wget https://github.com/jordenrabasco/q2-decontam-tutorial/blob/main/data_objs/metadata.tsv
 ```
 
-
 ### dectonam-identify-batches
+
 The `decontam-identify-batches` function has the inputs and parameters for both the `decontam-identify` action and the `decontam-score-viz` functions as well as the options for `feature-tables split`. Those inputs and parameters are;\
 `--i-table`: takes in a FeatureTable[Frequency] artifact such as an ASV or OTU table\
 `--m-metadata-file`: is your metadata file (needs to be tab delimited)\
@@ -49,6 +52,7 @@ The `decontam-identify-batches` function has the inputs and parameters for both 
 `--o-score-histograms`: The output `.qzv` file from the the action that can be visualized on the qiime serves which can be found [here](https://view.qiime2.org/)\
 
 To run `decontam-identify-batches` with the example data use the following command:
+
 ```{r, engine = 'bash', eval = FALSE}
 qiime quality-control decontam-identify-batches --i-table table.qza --i-rep-seqs rep_seqs.qza --m-metadata-file metadata.tsv --p-split-column subject --p-filter-empty-features  --p-method combined --p-prev-control-column Sample_or_Control --p-prev-control-indicator control --p-freq-concentration-column Concentration --p-threshold 0.1 --p-no-weighted --p-bin-size 0.05 --output-dir batches_outputs 
 ```
