@@ -42,9 +42,9 @@ To get the associated metadata file for the example data you will need to run th
 wget https://github.com/jordenrabasco/q2-decontam-tutorial/raw/main/data_objs/metadata.tsv
 ```
 
-## dectonam-identify
+## decontam-identify
 
-The first action that will be run is `dectonam-identify`. This action runs the functionality of the base Decontam application. You will need to decide which method of Decontam you would like to run; Frequency, Prevalence, or Combined. An in depth explanation of the functionality of each method can be found [here](https://benjjneb.github.io/decontam/vignettes/decontam_intro.html)\
+The first action that will be run is `decontam-identify`. This action runs the functionality of the base Decontam application. You will need to decide which method of Decontam you would like to run; Frequency, Prevalence, or Combined. An in depth explanation of the functionality of each method can be found [here](https://benjjneb.github.io/decontam/vignettes/decontam_intro.html)\
 Once you have decided which method to use make sure that you have the correct metadata. Each Decontam method requires unique metadata to run appropriately. The frequency method requires that each sample processed has corresponding concentration information. This information allows identification of contaminants through the simple idea that contaminants will be in greater relative abundance in low concentration samples than in high DNA concentration samples.\
 The prevalence method requires control samples to be included in the dataset being analyzed. These control samples need to be identified via a metadata column that differentiates them from experimental samples. This method works on the premise that contaminants will be in higher relative abundances in control samples than in experimental samples.\
 The combined method as the name suggests utilizes facets of both aforementioned methods and combines them to form a composite Decontam Score. Just as each method has it's own unique metadata each method also has its own unique parameters; those parameters unique to the frequency method have the prefix `--p-freq-` and those unique to the prevalence method have the prefix `--p-prev-`. The combined method uses all prevalence and frequency parameters.
@@ -91,7 +91,7 @@ For clarity only one of these methodologies are needed to identify contaminants 
 
 All methods will output a Qiime object containing the Decontam Scores for the input feature table.
 
-## dectonam-score-viz
+## decontam-score-viz
 
 The second action in the q2-Decontam workflow is `decontam-score-viz`. This action allows for visualization of the Decontam scores in the form of a histogram and a Decontam Score table that includes the feature id, the determination of whether the sequence is a contaminant or not (based on the given threshold), the Decontam Score output from the Decontam algorithm, the corresponding read number for each feature (abundance), the number of samples in which the feature appears (prevalence) and the associated DNA sequence. This action was designed to assist in investigating contaminants and identifying which threshold to use in the `decontam-remove` action. To select an appropriate threshold for the data, the contaminant feature distribution within the Histogram of Decontam Scores will need to be identified. Decontam Score distributions are bimodial meaning that there are two "peaks" within the distribution. The peaks correspond to a sub-distribution of contaminant features and a sub-distribution of true features. A feature with a lower Decontam Score indicates that there is more evidence that the feature is a contaminant, the converse is true in that if a feature has a high Decontam Score there is significant evidence that the feature is not a contaminant. Below is the histogram from the `decontam-score-viz` action using the example data provided in this tutorial. 
 
@@ -124,7 +124,7 @@ qiime quality-control decontam-score-viz --i-decontam-scores comb_decontam_score
 
 The example output is a `.qzv` file, can be found [here](https://github.com/jordenrabasco/q2-decontam-tutorial/raw/main/data_objs/decontan_score_viz.qzv "download") and can be visualized on the [qiime servers](https://view.qiime2.org/)
 
-## dectonam-remove
+## deontam-remove
 
 The third action in the q2-Decontam workflow is `decontam-remove`. This action removes features whose Decontam Scores fall below a user defined threshold. Those features are treated as contaminants and removed from the feature table and the representative sequences table mentioned previously to assist in accurate, contaminant free downstream processing within the qiime environment such as phylogenetic tree generation.
 
