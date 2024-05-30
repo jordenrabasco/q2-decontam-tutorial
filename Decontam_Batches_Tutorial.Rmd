@@ -32,7 +32,7 @@ To get the associated metadata file for the example data you will need to run th
 wget https://github.com/jordenrabasco/q2-decontam-tutorial/blob/main/data_objs/metadata.tsv
 ```
 
-### dectonam-identify-batches
+### decontam-identify-batches
 
 The `decontam-identify-batches` function has the inputs and parameters for both the `decontam-identify` action and the `decontam-score-viz` functions as well as the options for `feature-tables split`. Those inputs and parameters are;\
 `--i-table`: takes in a FeatureTable[Frequency] artifact such as an ASV or OTU table\
