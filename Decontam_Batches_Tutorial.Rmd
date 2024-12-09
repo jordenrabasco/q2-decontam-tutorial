@@ -29,7 +29,7 @@ Representative Sequence Table \| [`rep_seqs.qza`](https://github.com/jordenrabas
 To get the associated metadata file for the example data you will need to run the below command:
 
 ```{r, engine = 'bash', eval = FALSE}
-wget https://github.com/jordenrabasco/q2-decontam-tutorial/blob/main/data_objs/metadata.tsv
+wget https://raw.githubusercontent.com/jordenrabasco/q2-decontam-tutorial/refs/heads/main/data_objs/metadata.tsv
 ```
 
 ### decontam-identify-batches
