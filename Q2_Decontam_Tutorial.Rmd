@@ -18,7 +18,7 @@ Decontam is a bioinformatics decontamination tool applicable to both amplicon an
 
 -   If you're completely new to QIIME 2, we recommend reading [Getting Started with QIIME 2](https://amplicon-docs.qiime2.org/en/latest/explanations/getting-started.html) to familiarize yourself with concepts that may be helpful.
 
--   To export any of the objects used within the tutorial, the `qiime tools export` actions the documentation for which can be found [here](https://docs.qiime2.org/2024.10/tutorials/exporting/)
+-   To export any of the objects used within the tutorial, utilize the `qiime tools export` assoicated actions, the documentation for which can be found [here.](https://docs.qiime2.org/2024.10/tutorials/exporting/)
 
 # Installation and base actions
 
