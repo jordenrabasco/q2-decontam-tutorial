@@ -1,30 +1,34 @@
 ---
-title: "Q2_Decontam_Tutorial"
+title: "Q2-Decontam Tutorial"
 output: html_document
-date: "2024-02-22"
+date: "2025-09-15"
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Description:
+# Preamble
 
 Decontam is a bioinformatics decontamination tool applicable to both amplicon and metagenomic sequencing data, that leverages the differing relative abundances of contaminants in control samples when compared to experimental samples as well as those samples with low biomass when compared to samples with high biomass. Contaminants within microbial measurements are a consistent and pervasive issue within the field. These contaminants have the capacity to impact taxonomic assignments, relative abundance calculations and even promote the existence of non-existent taxa which can lead to incorrect assumptions and interpretations. This is of grave concern particularly in a low-biomass environment as the impact of these contaminants is heightened due to the low amount of starting biological material from the target community. Decontam seeks to remedy this by removing contaminants at the Feature level but before relative abundance calculations. This tool was developed and maintained by [Benjamin Callahan](https://github.com/benjjneb/decontam) and has been shown to be effective in identifying contaminants in datasets of various structures. Here we present Decontam functionality within q2-quality-control on the Qiime 2 platform, which for the rest of this document be referred to as q2-Decontam.
 
 **Reference** [Davis, N. M., Proctor, D. M., Holmes, S. P., Relman, D. A. & Callahan, B. J. Simple statistical identification and removal of contaminant sequences in marker-gene and metagenomics data. Microbiome 6, 226 (2018).](https://microbiomejournal.biomedcentral.com/articles/10.1186/s40168-018-0605-2#ethics)
 
-# Q2-Decontam Tutorial:
+# QIIME 2 Basics
 
-## Installation and base actions
+-   If you're completely new to QIIME 2, we recommend reading [Getting Started with QIIME 2](https://amplicon-docs.qiime2.org/en/latest/explanations/getting-started.html) to familiarize yourself with concepts that may be helpful.
 
-q2-Decontam functionality is included in the base amplicon and metagenomic QIIME 2 distributions under the quality-control umbrella. Q2-Decontam consists of two main actions:
+-   To export any of the objects used within the tutorial, the `qiime tools export` actions the documentation for which can be found [here](https://docs.qiime2.org/2024.10/tutorials/exporting/)
+
+# Installation and base actions
+
+Q2-Decontam functionality is included in the base Amplicon and Metagenomic QIIME 2 distributions under the quality-control umbrella. Q2-Decontam consists of two main actions:
 
 -   `qiime quality-control decontam-identify`
 
 -   `qiime quality-control decontam-score-viz`
 
-The `decontam-identify` action produces a QIIME 2 object containing the Decontam Scores for each feature in the dataset. This object is then passed into the `decontam-score-viz` action to visualize the distribution of decontam scores and help determine where the threshold should be set to eliminate the majority of contaminants but not remove true features from the data. To remove contaminants you will need to utilize `filter-table` actions.
+The `decontam-identify` action produces a QIIME 2 object containing the Decontam Scores for each feature in the dataset. This object is then passed into the `decontam-score-viz` action to visualize the distribution of decontam scores and help determine where the threshold should be set to eliminate the majority of contaminants but not remove true features from the data. To remove contaminants you will need to utilize `filter-table` actions. To install a local version of QIIME 2 via conda you can find installation instructions [here](https://docs.qiime2.org/2024.10/install/native/).
 
 # Tutorial and Walkthrough
 
@@ -40,14 +44,14 @@ To get the associated metadata file for the example data you will need to run th
 wget https://github.com/jordenrabasco/q2-decontam-tutorial/raw/main/data_objs/metadata.tsv
 ```
 
-## decontam-identify
+## Decontam-Identify
 
 The first action that will be run is `decontam-identify`. This action runs the functionality of the base decontam application. You will need to decide which method of decontam you would like to run; Frequency, Prevalence, or Combined. An in depth explanation of the functionality of each method can be found [here](https://benjjneb.github.io/decontam/vignettes/decontam_intro.html)\
 Once you have decided which method to use make sure that you have the correct metadata. Each decontam method requires unique metadata to run appropriately. The frequency method requires that each sample processed has corresponding concentration information. This information allows identification of contaminants through the simple idea that contaminants will be in greater relative abundance in low concentration samples than in high DNA concentration samples.\
 The prevalence method requires control samples to be included in the dataset being analyzed. These control samples need to be identified via a metadata column that differentiates them from experimental samples. This method works on the premise that contaminants will be in higher relative abundances in control samples than in experimental samples.\
 The combined method as the name suggests utilizes facets of both aforementioned methods and combines them to form a composite decontam score. Just as each method has it's own unique metadata, each method also has its own unique parameters; those parameters unique to the frequency method have the prefix `--p-freq-` and those unique to the prevalence method have the prefix `--p-prev-`. The combined method uses all prevalence and frequency parameters.
 
-### Arguments/Parameters:
+**Arguments/Parameters**:
 
 `--i-table`: Takes in a FeatureTable[Frequency] artifact such as an ASV or OTU table\
 `--m-metadata-file`: Takes in a metadata file corresponding to the data being analyzed(needs to be tab delimited)\
@@ -89,7 +93,7 @@ For clarity only one of these methodologies are needed to identify contaminants 
 
 All methods will output a Qiime 2 object containing the decontam scores for the input feature table.
 
-## decontam-score-viz
+## Decontam-Score-Viz
 
 The second action in the q2-Decontam workflow is `decontam-score-viz`. This action allows for visualization of the decontam scores in the form of a histogram and a decontam score table that includes the feature id, the determination of whether the sequence is a contaminant or not (based on the given threshold), the Decontam Score output from the Decontam algorithm, the corresponding read number for each feature (abundance), the number of samples in which the feature appears (prevalence) and the associated DNA sequence. This action was designed to assist in investigating contaminants and identifying which threshold to use when removing contaminants. To select an appropriate threshold for the data, the contaminant feature distribution within the histogram of decontam scores will need to be identified. Decontam score distributions are typically bimodial meaning that there are two "peaks" within the distribution. The peaks correspond to a sub-distribution of contaminant features and a sub-distribution of true features. A feature with a lower decontam score indicates that there is more evidence that the feature is a contaminant, the converse is true in that if a feature has a high decontam score; in that there is significant evidence that the feature is not a contaminant. Below is the histogram from the `decontam-score-viz` action using the example data provided in this tutorial.
 
@@ -112,7 +116,7 @@ To investigate specific features within the experiment the following table is pr
 <img src="data_objs/assets/example_table.png" alt="table"/>
 :::
 
-### Arguments/Parameters:
+**Arguments/Parameters**:
 
 `--i-decontam-scores`: This is the output object from `decontam-identify` and is defined as a Collection[FeatureData[DecontamScore]]\
 `--i-table`: Takes in a FeatureTable[Frequency] artifact such as an ASV or OTU table (same as input to `decontam-identify`)\
@@ -128,11 +132,11 @@ To run `decontam-score-viz` with the example data use the following command:
 qiime quality-control decontam-score-viz --i-decontam-scores comb_decontam_scores.qza --i-table table.qza --i-rep-seqs rep_seqs.qza --p-threshold 0.1 --p-no-weighted --p-bin-size 0.05 --o-visualization decontam_score_viz.qzv
 ```
 
-The example output is a `.qzv` file, can be found [here](https://github.com/jordenrabasco/q2-decontam-tutorial/raw/main/data_objs/decontam_score_viz.qzv "download") and can be visualized on the [qiime servers](https://view.qiime2.org/)
+The example output is a `.qzv` file, can be found [here](https://github.com/jordenrabasco/q2-decontam-tutorial/raw/main/data_objs/decontam_score_viz.qzv "download") and can be visualized locally via <https://view.qiime2.org/>
 
-## remove contaminants identified by decontam
+## Remove Contaminants Identified by Decontam
 
-To remove the contaminant features use the `filter-table` actions. This code removes features whose decontam scores fall below a user defined threshold. Those features are treated as contaminants and removed from the feature table and the representative sequences table mentioned previously to assist in accurate, contaminant free downstream processing within the qiime environment such as phylogenetic tree generation.
+To remove the contaminant features use the `filter-table` actions. The code below, specifically the `--p-where` flag utilizes SQLite syntax to filter features or samples. The code below removes features whose decontam scores fall below a user defined threshold, in this case 0.1. To change the desired threshold, augment the 0.1 in the shown command to any value between 0-1. Those features that fall below the aforementioned threshold are treated as contaminants and removed from the feature table and the representative sequences table mentioned previously to assist in accurate, contaminant free downstream processing within the QIIME 2 environment such as phylogenetic tree generation. For more information on the filter-features plugin please visit their dedicated page [here](https://docs.qiime2.org/2024.10/plugins/available/feature-table/filter-features/).
 
 ```{r, engine = 'bash', eval = FALSE}
 qiime feature-table filter-features --i-table table.qza --m-metadata-file comb_decontam_scores.qza --p-where '[p]>0.1 OR [p] IS NULL' --o-filtered-table filtered-table.qza
@@ -145,3 +149,5 @@ qiime feature-table filter-seqs --i-data rep_seqs.qza --i-table filtered-table.q
 This will output two files the filtered feature table and the representative sequence table free of contaminants, and can be found [here](https://github.com/jordenrabasco/q2-decontam-tutorial/raw/main/data_objs/filtered-table.qza "donwload") and [here](https://github.com/jordenrabasco/q2-decontam-tutorial/raw/main/data_objs/filtered-rep-seqs.qza "download") respectively.
 
 Please feel free to reach out to me at [jrabasc\@ncsu.edu](mailto:jrabasc@ncsu.edu){.email} it you have any further questions!
+
+Q2-Decontam Tutorial © 2025 by [Jorden Rabasco](https://github.com/jordenrabasco) is licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
