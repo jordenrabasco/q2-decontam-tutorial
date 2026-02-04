@@ -20,15 +20,17 @@ Decontam is a bioinformatics decontamination tool applicable to both amplicon an
 
 -   To export any of the objects used within the tutorial, utilize the `qiime tools export` action, the documentation for which can be found [here.](https://docs.qiime2.org/2024.10/tutorials/exporting/)
 
+-   To install a local version of QIIME 2 via conda you can find installation instructions [here](https://docs.qiime2.org/2024.10/install/native/).
+
 # Installation and base actions
 
-Q2-Decontam functionality is included in the base Amplicon and Metagenomic QIIME 2 distributions under the quality-control umbrella. Q2-Decontam consists of two main actions:
+Q2-Decontam functionality is included by default in QIIME 2 and MOSHPIT distributions under the quality-control umbrella. Q2-Decontam consists of two main actions:
 
 -   `qiime quality-control decontam-identify`
 
 -   `qiime quality-control decontam-score-viz`
 
-The `decontam-identify` action produces a QIIME 2 object containing the Decontam Scores for each feature in the dataset. This object is then passed into the `decontam-score-viz` action to visualize the distribution of decontam scores and help determine where the threshold should be set to eliminate the majority of contaminants but not remove true features from the data. To remove contaminants you will need to utilize `filter-table` actions. To install a local version of QIIME 2 via conda you can find installation instructions [here](https://docs.qiime2.org/2024.10/install/native/).
+The `decontam-identify` action produces a QIIME 2 object containing the Decontam Scores for each feature in the dataset. This object is then passed into the `decontam-score-viz` action to visualize the distribution of decontam scores and help determine where the threshold should be set to eliminate the majority of contaminants but not remove true features from the data. To remove contaminants you will need to utilize `filter-table` actions.
 
 # Tutorial and Walkthrough
 
